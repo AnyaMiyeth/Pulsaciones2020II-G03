@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Entity;
+using BLL;
 
 namespace Presentacion
 {
@@ -29,20 +28,18 @@ namespace Presentacion
             Console.WriteLine("Digite la edad");
             edad = int.Parse(Console.ReadLine());
 
-            if (sexo.ToUpper().Equals("F"))
-            {
-                pulsacion = (220 - edad) / 10;
-            }
-            else if (sexo.ToUpper().Equals("M"))
-            {
-                pulsacion = (210 - edad) / 10;
-            }
-            else
-            {
-                pulsacion = 0;
-            }
+            Persona persona = new Persona(identificacion,nombre,edad,sexo);
+      
 
-            Console.WriteLine($"Su Pulsaciones {pulsacion} " );
+            PersonaService personaService = new PersonaService();
+
+            persona.Pulsacion = personaService.CalcularPulsacion(sexo,edad);
+            Console.WriteLine($"Su Pulsaciones {persona.Pulsacion} ");
+
+            Console.WriteLine(personaService.Guardar(persona));
+
+            Console.ReadKey();
+           
 
         }
     }
